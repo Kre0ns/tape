@@ -3,7 +3,15 @@
 #include <vector>
 #include <memory>
 
-enum class NodeType { Inc, Dec, MoveLeft, MoveRight, Input, Output, Loop };
+enum class NodeType { 
+    Inc, 
+    Dec, 
+    MoveLeft, 
+    MoveRight, 
+    Input, 
+    Output, 
+    Loop 
+};
 
 struct ASTNode
 {
