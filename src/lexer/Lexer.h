@@ -2,7 +2,16 @@
 
 #include <istream>
 
-#include "TokenType.h"
+enum class TokenType {
+    Inc, 
+    Dec, 
+    MoveLeft, 
+    MoveRight, 
+    Input, 
+    Output, 
+    LoopStart,
+    LoopEnd
+};
 
 class Lexer
 {
