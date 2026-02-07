@@ -5,4 +5,4 @@ add_subdirectory(parser)
 
 add_executable(tape main.cpp)
 
-target_link_libraries(tape PRIVATE lexer ast state)
+target_link_libraries(tape PRIVATE lexer ast state parser)
