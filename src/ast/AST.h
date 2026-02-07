@@ -3,7 +3,8 @@
 #include <vector>
 #include <memory>
 
-enum class NodeType { 
+enum class NodeType {
+    Root,
     Inc, 
     Dec, 
     MoveLeft, 
