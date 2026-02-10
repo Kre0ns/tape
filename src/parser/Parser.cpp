@@ -50,7 +50,7 @@ std::unique_ptr<ASTNode> Parser::parse()
             break;
 
         case TokenType::LoopEnd:
-            if (currentScope->type != NodeType::Loop) throw std::runtime_error("Syntax error"); // TODO: REFACTOR
+            if (currentScope->type != NodeType::Loop) throw SyntaxError("Unexpected token ']': No matching open loop found.");
             scopeStack.pop();
             break;
 
@@ -59,7 +59,7 @@ std::unique_ptr<ASTNode> Parser::parse()
         }
     }
 
-    if (scopeStack.top()->type != NodeType::Root) throw std::runtime_error("Syntax error"); // TODO: REFACTOR
+    if (scopeStack.top()->type != NodeType::Root) throw SyntaxError("Unexpected end of input: Unclosed loop '['.");
 
     return root;
 }

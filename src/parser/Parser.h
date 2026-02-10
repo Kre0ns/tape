@@ -2,10 +2,10 @@
 
 #include <memory>
 #include <stack>
-#include <stdexcept>
 
 #include "Lexer.h"
 #include "AST.h"
+#include "SyntaxError.h"
 
 class Parser
 {
