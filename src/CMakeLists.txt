@@ -3,7 +3,8 @@ add_subdirectory(lexer)
 add_subdirectory(state)
 add_subdirectory(parser)
 add_subdirectory(errors)
+add_subdirectory(interpreter)
 
 add_executable(tape main.cpp)
 
-target_link_libraries(tape PRIVATE lexer ast state parser)
+target_link_libraries(tape PRIVATE lexer ast state parser interpreter errors)
