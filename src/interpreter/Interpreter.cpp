@@ -65,6 +65,8 @@ void Interpreter::run(const ASTNode& astRoot)
                 {
                     this->_state.tape[this->_state.pointer] = static_cast<uint8_t>(input);
                 }
+
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             }
             break;
             

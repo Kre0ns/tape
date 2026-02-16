@@ -4,6 +4,7 @@
 #include <stack>
 #include <cstdint>
 #include <iostream>
+#include <limits>
 
 #include "AST.h"
 #include "MachineState.h"
