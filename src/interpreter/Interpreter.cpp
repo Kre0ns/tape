@@ -1,7 +1,7 @@
 #include "Interpreter.h"
 
 Interpreter::Interpreter(MachineState& state)
-    : _state(state)
+    : _state(state), _needsNewline(false)
 {
 }
 
@@ -9,6 +9,9 @@ void Interpreter::run(const ASTNode& astRoot)
 {
     std::stack<ExecutionFrame> frameStack;
     frameStack.push({&astRoot, 0});
+
+    bool producedOutput = false;
+    uint8_t lastOutput = 0;
 
     while (!frameStack.empty())
     {
@@ -71,7 +74,9 @@ void Interpreter::run(const ASTNode& astRoot)
             break;
             
         case NodeType::Output:
+            producedOutput = true;
             std::cout.put(static_cast<uint8_t>(this->_state.tape[this->_state.pointer]));
+            lastOutput = static_cast<uint8_t>(this->_state.tape[this->_state.pointer]);
             break;
 
         case NodeType::Loop:
@@ -82,5 +87,11 @@ void Interpreter::run(const ASTNode& astRoot)
             break;
         }
     }
-    
+
+    this->_needsNewline = producedOutput && lastOutput != '\n' ? true : false;
+}
+
+bool Interpreter::getNeedsNewline() const
+{
+    return this->_needsNewline;
 }

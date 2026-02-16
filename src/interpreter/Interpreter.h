@@ -17,6 +17,7 @@ public:
 
     void run(const ASTNode& astRoot);
 
+    bool getNeedsNewline() const;
 private:
     struct ExecutionFrame
     {
@@ -25,4 +26,5 @@ private:
     };
 
     MachineState& _state;
+    bool _needsNewline;
 };
