@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <iostream>
 #include <limits>
+#include <cstdio>
 
 #include "AST.h"
 #include "MachineState.h"

@@ -10,8 +10,7 @@ void Interpreter::run(const ASTNode& astRoot)
     std::stack<ExecutionFrame> frameStack;
     frameStack.push({&astRoot, 0});
 
-    bool producedOutput = false;
-    uint8_t lastOutput = 0;
+    this->_needsNewline = false;
 
     while (!frameStack.empty())
     {
@@ -60,24 +59,33 @@ void Interpreter::run(const ASTNode& astRoot)
             {
                 int input = std::cin.get();
 
-                if (input == std::char_traits<char>::eof()) 
+                if (input == EOF) 
                 {
                     this->_state.tape[this->_state.pointer] = 0;
+                    std::cin.clear();
+                    std::clearerr(stdin);
                 }
                 else
                 {
                     this->_state.tape[this->_state.pointer] = static_cast<uint8_t>(input);
-                }
 
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    if (input != '\n') 
+                    {
+                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    }
+                }
             }
             break;
             
         case NodeType::Output:
-            producedOutput = true;
-            std::cout.put(static_cast<uint8_t>(this->_state.tape[this->_state.pointer]));
-            lastOutput = static_cast<uint8_t>(this->_state.tape[this->_state.pointer]);
-            break;
+            {
+                uint8_t output = static_cast<uint8_t>(this->_state.tape[this->_state.pointer]); 
+
+                std::cout.put(output);
+                
+                this->_needsNewline = output == '\n' ? false : true;
+                break;    
+            }    
 
         case NodeType::Loop:
             if (this->_state.tape[this->_state.pointer] != 0) frameStack.push({currentChild, 0});
@@ -87,8 +95,6 @@ void Interpreter::run(const ASTNode& astRoot)
             break;
         }
     }
-
-    this->_needsNewline = producedOutput && lastOutput != '\n' ? true : false;
 }
 
 bool Interpreter::getNeedsNewline() const
