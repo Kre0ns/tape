@@ -1,5 +1,9 @@
 #include "Parser.h"
 
+#include <stack>
+
+#include "SyntaxError.h"
+
 Parser::Parser(Lexer& lexer)
     : _lexer(lexer)
 {

@@ -1,11 +1,9 @@
 #pragma once
 
 #include <memory>
-#include <stack>
 
 #include "Lexer.h"
 #include "AST.h"
-#include "SyntaxError.h"
 
 class Parser
 {

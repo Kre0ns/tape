@@ -1,5 +1,14 @@
 #include "Interpreter.h"
 
+#include <memory>
+#include <stack>
+#include <cstdint>
+#include <iostream>
+#include <limits>
+#include <cstdio>
+
+#include "RuntimeError.h"
+
 Interpreter::Interpreter(MachineState& state)
     : _state(state), _needsNewline(false)
 {

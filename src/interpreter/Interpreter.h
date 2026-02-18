@@ -1,15 +1,7 @@
 #pragma once
 
-#include <memory>
-#include <stack>
-#include <cstdint>
-#include <iostream>
-#include <limits>
-#include <cstdio>
-
 #include "AST.h"
 #include "MachineState.h"
-#include "RuntimeError.h"
 
 class Interpreter
 {
