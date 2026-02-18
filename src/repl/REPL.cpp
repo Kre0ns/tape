@@ -5,7 +5,7 @@ REPL::REPL()
 { 
 }
 
-void REPL::init()
+void REPL::run()
 {
     std::string input;
 

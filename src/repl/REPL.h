@@ -16,7 +16,7 @@ class REPL
 public:
     REPL();
 
-    void init();
+    void run();
 
 private:
     static constexpr std::string_view ReplVersion = "0.1.0";
