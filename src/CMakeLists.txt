@@ -5,6 +5,7 @@ add_subdirectory(parser)
 add_subdirectory(errors)
 add_subdirectory(interpreter)
 add_subdirectory(repl)
+add_subdirectory(runner)
 
 add_executable(tape main.cpp)
 
