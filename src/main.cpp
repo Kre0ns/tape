@@ -4,7 +4,7 @@ int main(int argc, char* argv[])
 {
     REPL repl;
 
-    repl.run();
+    repl.init();
 
     return 0;
 }

@@ -1,11 +1,13 @@
 #include "REPL.h"
 
+#include <sstream>
+
 REPL::REPL()
-    : _interpreter(_state)
+    : _runner()
 { 
 }
 
-void REPL::run()
+void REPL::init()
 {
     std::string input;
 
@@ -26,24 +28,6 @@ void REPL::run()
         
         std::stringstream stringStream(input);
 
-        Lexer lexer(stringStream);
-
-        Parser parser(lexer);
-
-        try
-        {
-            std::unique_ptr<ASTNode> ast = parser.parse();
-
-            this->_interpreter.run(*ast);
-
-            if (this->_interpreter.getNeedsNewline()) std::cout << std::endl;
-        }
-        catch (const Error& e)
-        {
-            if (this->_interpreter.getNeedsNewline()) std::cout << std::endl;
-
-            std::cout << e.what() << std::endl;
-        }
-
+        this->_runner.run(stringStream);
     }
 }
