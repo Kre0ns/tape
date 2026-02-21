@@ -12,7 +12,7 @@ public:
     void init();
 
 private:
-    static constexpr std::string_view ReplVersion = "0.1.0";
+    static constexpr std::string_view ReplVersion = "1.1.0";
     static constexpr std::string_view ExitKeyword = "exit";
 
     Runner _runner;
