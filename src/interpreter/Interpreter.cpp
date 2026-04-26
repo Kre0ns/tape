@@ -68,20 +68,13 @@ void Interpreter::run(const ASTNode& astRoot)
             {
                 int input = std::cin.get();
 
-                if (input == EOF) 
-                {
-                    this->_state.tape[this->_state.pointer] = 0;
-                    std::cin.clear();
-                    std::clearerr(stdin);
-                }
-                else
-                {
-                    this->_state.tape[this->_state.pointer] = static_cast<uint8_t>(input);
+                if (input == EOF) return;
 
-                    if (input != '\n') 
-                    {
-                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                    }
+                this->_state.tape[this->_state.pointer] = static_cast<uint8_t>(input);
+
+                if (input != '\n') 
+                {
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 }
             }
             break;
