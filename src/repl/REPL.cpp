@@ -11,7 +11,7 @@ void REPL::init()
 {
     std::string input;
 
-    std::cout << "tape " << ReplVersion << std::endl;
+    std::cout << "tape " << VERSION << std::endl;
     std::cout << "Type \"" << ExitKeyword << "\" to exit" << std::endl;
 
     while (true)

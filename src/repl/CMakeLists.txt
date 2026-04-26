@@ -1,5 +1,7 @@
 add_library(repl REPL.cpp)
 
+target_compile_definitions(repl PRIVATE VERSION="${PROJECT_VERSION}")
+
 target_include_directories(repl PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_link_libraries(repl PUBLIC runner)
