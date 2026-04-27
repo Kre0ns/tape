@@ -3,7 +3,7 @@
 ![Hackatime time](https://hackatime-badge.hackclub.com/U07D6SS37SL/tape)
 ![GitHub Release](https://img.shields.io/github/v/release/Kre0ns/tape)
 
-**tape** is an overkill [brainf**k](https://esolangs.org/wiki/Brainfuck) interpreter written in C++ and built with CMake.
+**tape** is an over-engineered [brainf**k](https://esolangs.org/wiki/Brainfuck) interpreter written in C++ and built with CMake.
 
 ## Features
 - Working REPL
