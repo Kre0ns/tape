@@ -5,48 +5,59 @@ Lexer::Lexer(std::istream& input)
 {
 }
 
-bool Lexer::nextToken(TokenType& token)
+bool Lexer::nextToken(Token& token)
 {
     char currentChar;
 
     while (this->_input.get(currentChar))
     {
+        this->_column++;
+
+        if (currentChar == '\n')
+        {
+            this->_line++;
+            this->_column = 0;
+            continue;
+        }
+
         switch (currentChar)
         {
-        case '+':
-            token = TokenType::Inc;
-            return true;
+            using enum TokenType;
 
-        case '-':
-            token = TokenType::Dec;
-            return true;
+            case '+':
+                token = {Inc, this->_line, this->_column};
+                return true;
 
-        case '<':
-            token = TokenType::MoveLeft;
-            return true;
-        
-        case '>':
-            token = TokenType::MoveRight;
-            return true;
+            case '-':
+                token = {Dec, this->_line, this->_column};
+                return true;
 
-        case ',':
-            token = TokenType::Input;
-            return true;
-        
-        case '.':
-            token = TokenType::Output;
-            return true;
+            case '<':
+                token = {MoveLeft, this->_line, this->_column};
+                return true;
+            
+            case '>':
+                token = {MoveRight, this->_line, this->_column};
+                return true;
 
-        case '[':
-            token = TokenType::LoopStart;
-            return true;
+            case ',':
+                token = {Input, this->_line, this->_column};
+                return true;
+            
+            case '.':
+                token = {Output, this->_line, this->_column};
+                return true;
 
-        case ']':
-            token = TokenType::LoopEnd;
-            return true;
+            case '[':
+                token = {LoopStart, this->_line, this->_column};
+                return true;
 
-        default:
-            continue;
+            case ']':
+                token = {LoopEnd, this->_line, this->_column};
+                return true;
+
+            default:
+                continue;
         }
     }
 

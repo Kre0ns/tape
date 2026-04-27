@@ -6,6 +6,7 @@
 #include <iostream>
 #include <limits>
 #include <cstdio>
+#include <format>
 
 #include "RuntimeError.h"
 
@@ -80,51 +81,61 @@ void Interpreter::run(const ASTNode& astRoot)
 
         switch (currentChild->type)
         {
-        case NodeType::Inc:
-            this->_state.tape[this->_state.pointer]++;
-            break;
+            using enum NodeType;
 
-        case NodeType::Dec:
-            this->_state.tape[this->_state.pointer]--;
-            break;
+            case Inc:
+                this->_state.tape[this->_state.pointer]++;
+                break;
 
-        case NodeType::MoveLeft:
-            if (this->_state.pointer <= 0) throw RuntimeError("Illegal operation '<' - Moves out of bounds");
+            case Dec:
+                this->_state.tape[this->_state.pointer]--;
+                break;
 
-            this->_state.pointer--;
-            break;
+            case MoveLeft:
+                if (this->_state.pointer <= 0) 
+                {
+                    std::string msg = std::format("'<' at {}:{} moves out of bounds", currentChild->line, currentChild->column);
+                    throw RuntimeError(msg);
+                }
 
-        case NodeType::MoveRight:
-            if (this->_state.pointer >= MachineState::TapeSize - 1) throw RuntimeError("Illegal operation '>' - Moves out of bounds");
+                this->_state.pointer--;
+                break;
 
-            this->_state.pointer++;
-            break;
-        
-        case NodeType::Input:
-            {
-                char input = getRawChar();
+            case MoveRight:
+                if (this->_state.pointer >= MachineState::TapeSize - 1)
+                {
+                    std::string msg = std::format("'>' at {}:{} moves out of bounds", currentChild->line, currentChild->column);
+                    throw RuntimeError(msg);
+                }
 
-                this->_state.tape[this->_state.pointer] = static_cast<uint8_t>(input);
-            }
-            break;
+                this->_state.pointer++;
+                break;
             
-        case NodeType::Output:
-            {
-                uint8_t output = static_cast<uint8_t>(this->_state.tape[this->_state.pointer]); 
+            case Input:
+                {
+                    char input = getRawChar();
 
-                std::cout.put(output);
-                std::cout.flush();
+                    this->_state.tape[this->_state.pointer] = static_cast<uint8_t>(input);
+                }
+                break;
                 
-                this->_needsNewline = output == '\n' ? false : true;
-                break;    
-            }    
+            case Output:
+                {
+                    uint8_t output = static_cast<uint8_t>(this->_state.tape[this->_state.pointer]); 
 
-        case NodeType::Loop:
-            if (this->_state.tape[this->_state.pointer] != 0) frameStack.push({currentChild, 0});
-            break;
+                    std::cout.put(output);
+                    std::cout.flush();
+                    
+                    this->_needsNewline = output == '\n' ? false : true;
+                    break;    
+                }    
 
-        default:
-            break;
+            case Loop:
+                if (this->_state.tape[this->_state.pointer] != 0) frameStack.push({currentChild, 0});
+                break;
+
+            default:
+                break;
         }
     }
 }

@@ -18,6 +18,8 @@ struct ASTNode
 {
     NodeType type;
     std::vector<std::unique_ptr<ASTNode>> children;
+    int line;
+    int column;
 
-    explicit ASTNode(NodeType t);
+    ASTNode(NodeType t, int l, int c);
 };

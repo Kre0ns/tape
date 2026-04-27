@@ -13,13 +13,21 @@ enum class TokenType {
     LoopEnd
 };
 
+struct Token {
+    TokenType type;
+    int line;
+    int column;
+};
+
 class Lexer
 {
 public:
-    Lexer(std::istream& input);
+    explicit Lexer(std::istream& input);
 
-    bool nextToken(TokenType& token);
+    bool nextToken(Token& token);
 
 private:
     std::istream& _input;
+    int _line = 1;
+    int _column = 0;
 };
