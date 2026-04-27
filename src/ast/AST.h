@@ -19,5 +19,5 @@ struct ASTNode
     NodeType type;
     std::vector<std::unique_ptr<ASTNode>> children;
 
-    ASTNode(NodeType t);
+    explicit ASTNode(NodeType t);
 };

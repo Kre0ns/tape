@@ -59,7 +59,7 @@ void Interpreter::run(const ASTNode& astRoot)
             break;
 
         case NodeType::MoveRight:
-            if (this->_state.pointer >= this->_state.TapeSize - 1) throw RuntimeError("Illegal operation '>' - Moves out of bounds");
+            if (this->_state.pointer >= MachineState::TapeSize - 1) throw RuntimeError("Illegal operation '>' - Moves out of bounds");
 
             this->_state.pointer++;
             break;

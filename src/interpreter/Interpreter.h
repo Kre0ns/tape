@@ -6,7 +6,7 @@
 class Interpreter
 {
 public:
-    Interpreter(MachineState& state);
+    explicit Interpreter(MachineState& state);
 
     void run(const ASTNode& astRoot);
 

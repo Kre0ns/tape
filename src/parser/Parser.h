@@ -8,7 +8,7 @@
 class Parser
 {
 public:
-    Parser(Lexer& lexer);
+    explicit Parser(Lexer& lexer);
 
     std::unique_ptr<ASTNode> parse();
 
