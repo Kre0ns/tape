@@ -9,6 +9,42 @@
 
 #include "RuntimeError.h"
 
+#ifdef _WIN32
+    #include <conio.h>
+#else
+    #include <termios.h>
+    #include <unistd.h>
+#endif
+
+
+namespace {
+    char getRawChar()
+    {
+#ifdef _WIN32
+        return static_cast<char>(_getch());
+#else
+        char buffer = 0;
+
+        struct termios oldAttr;
+        struct termios newAttr;
+
+        tcgetattr(STDIN_FILENO, &oldAttr);
+        newAttr = oldAttr;
+        newAttr.c_lflag &= ~(ICANON | ECHO);
+        newAttr.c_cc[VMIN] = 1;
+        newAttr.c_cc[VTIME] = 0;
+
+        tcsetattr(STDIN_FILENO, TCSANOW, &newAttr);
+
+        read(STDIN_FILENO, &buffer, 1);
+
+        tcsetattr(STDIN_FILENO, TCSANOW, &oldAttr);
+
+        return buffer;
+#endif
+    }
+}
+
 Interpreter::Interpreter(MachineState& state)
     : _state(state), _needsNewline(false)
 {
@@ -66,16 +102,9 @@ void Interpreter::run(const ASTNode& astRoot)
         
         case NodeType::Input:
             {
-                int input = std::cin.get();
-
-                if (input == EOF) return;
+                char input = getRawChar();
 
                 this->_state.tape[this->_state.pointer] = static_cast<uint8_t>(input);
-
-                if (input != '\n') 
-                {
-                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                }
             }
             break;
             
@@ -84,6 +113,7 @@ void Interpreter::run(const ASTNode& astRoot)
                 uint8_t output = static_cast<uint8_t>(this->_state.tape[this->_state.pointer]); 
 
                 std::cout.put(output);
+                std::cout.flush();
                 
                 this->_needsNewline = output == '\n' ? false : true;
                 break;    
