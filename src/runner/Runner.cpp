@@ -15,11 +15,19 @@ void Runner::run(std::istream& input)
 
         this->_interpreter.run(*ast);
 
-        if (this->_interpreter.getNeedsNewline()) std::cout << std::endl;
+        if (this->_interpreter.getNeedsNewline())
+        {
+            std::cout << std::endl;
+            this->_interpreter.resetNeedsNewline();
+        }
     }
     catch (const Error& e)
     {
-        if (this->_interpreter.getNeedsNewline()) std::cout << std::endl;
+        if (this->_interpreter.getNeedsNewline())
+        {
+            std::cout << std::endl;
+            this->_interpreter.resetNeedsNewline();
+        }
 
         std::cout << e.what() << std::endl;
     }

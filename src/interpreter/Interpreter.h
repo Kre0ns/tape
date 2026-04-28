@@ -14,6 +14,7 @@ public:
     void run(const ASTNode& astRoot);
 
     bool getNeedsNewline() const;
+    void resetNeedsNewline();
 private:
     static constexpr std::size_t TAPE_SIZE = 30000;
     static constexpr std::uint8_t INITIAL_CELL_VALUE = 0;

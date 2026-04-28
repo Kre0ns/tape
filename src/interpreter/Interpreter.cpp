@@ -144,3 +144,8 @@ bool Interpreter::getNeedsNewline() const
 {
     return this->_needsNewline;
 }
+
+void Interpreter::resetNeedsNewline()
+{
+    this->_needsNewline = false;
+}
