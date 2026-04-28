@@ -3,11 +3,6 @@
 #include "Parser.h"
 #include "Error.h"
 
-Runner::Runner()
-    : _interpreter(_state)
-{
-}
-
 void Runner::run(std::istream& input)
 {
     Lexer lexer(input);
