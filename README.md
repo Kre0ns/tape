@@ -8,6 +8,8 @@
 ## Features
 - Working REPL
 - Non-recursive structure
+- Script file interpretation
+- Detailed error messages
 
 ![Demo](assets/demo.gif)
 
@@ -24,7 +26,3 @@
     ```bash
     ./tape
     ```
-
-## Planned
-- File interpretation
-- Detailed error messages
